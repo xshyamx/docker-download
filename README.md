@@ -7,6 +7,8 @@ Golang port of [docker_pull.py](https://github.com/NotGlop/docker-drag/blob/mast
 - Use the same access token for all blob layers
 - Reuse layerIds from the container config json instead of generating fake-ids
 
+![Sequence Diagram](/doc/img/seq.png "Sequence Diagram")
+
 ## Usage ##
 
 The following command line flags are supported
@@ -17,3 +19,17 @@ The following command line flags are supported
 | `o`  | Target `directory` to download the image        | No        | Basename of image |
 | `v`  | Print verbose log                               | No        | false             |
 | `h`  | Print help                                      | No        | false             |
+
+### Examples ###
+
+``` sh
+docker-download -i swagger-api/swagger-editor:v4-latest
+```
+
+Should download the image into a folder named `swagger-editor` in the directory from which the command was invoked
+
+```sh
+docker-download -i swagger-api/swagger-editor:v4-latest -o v4-latest
+```
+
+Should download the image into a folder named `v4-latest` in the directory from which the command was invoked
