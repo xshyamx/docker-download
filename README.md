@@ -11,9 +11,9 @@ Golang port of [docker_pull.py](https://github.com/NotGlop/docker-drag/blob/mast
 
 The following command line flags are supported
 
-|Flag | Description | Mandatory | Default Value |
-|---|---|---|---|---|
-| `i` | The `image` to download of the form `image:tag` | Yes | NA |
-| `o` | Target `directory` to download the image | No | Basename of image |
-| `v` | Print verbose log | No | false |
-| `h` | Print help | No | false |
+| Flag | Description                                     | Mandatory | Default Value     |
+|------|-------------------------------------------------|-----------|-------------------|
+| `i`  | The `image` to download of the form `image:tag` | Yes       | NA                |
+| `o`  | Target `directory` to download the image        | No        | Basename of image |
+| `v`  | Print verbose log                               | No        | false             |
+| `h`  | Print help                                      | No        | false             |
