@@ -78,7 +78,7 @@ loop For each layer in manifest indexed by i
     "parent": "<color:blue>${previousLayerId}</color>"
   }
   end note
-  c -> s ++: ""GET <color:blue>${registryUri}</color>/v2/<color:blue>${image}</color>/blobs/<color:blue>${config.digest}</color>""\n""Accept: <color:blue>${config.mediaType}</color>""\n""Authorization: Bearer <color:blue>${access_token}</color>""
+  c -> s ++: ""GET <color:blue>${registryUri}</color>/v2/<color:blue>${image}</color>/blobs/<color:blue>${layer.digest}</color>""\n""Accept: <color:blue>${layer.mediaType}</color>""\n""Authorization: Bearer <color:blue>${access_token}</color>""
   return
   c -> c: Gunzip response and save to ""layer.tar""
 end loop
