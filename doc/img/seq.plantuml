@@ -68,10 +68,10 @@ end note
 
 ' layers
 loop For each layer in manifest indexed by i
-  c -> c: Get currentLayerId = layerIds[i]
-  c -> c: Create folder ""<color:blue>${currentLayerId}</color>"" under which all further files will be written
-  c -> c: Create ""VERSION"" file with value 1.0
-  c -> c: Create ""json"" file
+  c -> c: Get ""currentLayerId = layerIds[i]""
+  c -> c: Create folder ""<color:blue>${currentLayerId}</color>""
+  c -> c: Create ""<color:blue>${currentLayerId}</color>/VERSION"" file with value 1.0
+  c -> c: Create ""<color:blue>${currentLayerId}</color>/json"" file
   note over c
   {
     "id": "<color:blue>${currentLayerId}</color>",
@@ -80,6 +80,6 @@ loop For each layer in manifest indexed by i
   end note
   c -> s ++: ""GET <color:blue>${registryUri}</color>/v2/<color:blue>${image}</color>/blobs/<color:blue>${layer.digest}</color>""\n""Accept: <color:blue>${layer.mediaType}</color>""\n""Authorization: Bearer <color:blue>${access_token}</color>""
   return
-  c -> c: Gunzip response and save to ""layer.tar""
+  c -> c: Gunzip response and save to ""<color:blue>${currentLayerId}</color>/layer.tar""
 end loop
 @enduml
