@@ -68,7 +68,7 @@ end note
 
 ' layers
 loop For each layer in manifest indexed by i
-  c -> c: Get ""currentLayerId = layerIds[i]""
+  c -> c: Get ""previousLayerId = currentLayerId""\n""currentLayerId = layerIds[i]""
   c -> c: Create folder ""<color:blue>${currentLayerId}</color>""
   c -> c: Create ""<color:blue>${currentLayerId}</color>/VERSION"" file with value 1.0
   c -> c: Create ""<color:blue>${currentLayerId}</color>/json"" file
