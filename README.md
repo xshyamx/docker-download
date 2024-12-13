@@ -14,23 +14,31 @@ Differences from from [docker-drag](https://github.com/NotGlop/docker-drag)
 
 The following command line flags are supported
 
-| Flag | Description                                     | Mandatory | Default Value     |
-|------|-------------------------------------------------|-----------|-------------------|
-| `i`  | The `image` to download of the form `image:tag` | Yes       | NA                |
-| `o`  | Target `directory` to download the image        | No        | Basename of image |
-| `v`  | Print verbose log                               | No        | false             |
-| `h`  | Print help                                      | No        | false             |
+| Flag   | Description                                     | Mandatory | Default Value     |
+|--------|-------------------------------------------------|-----------|-------------------|
+| `i`    | The `image` to download of the form `image:tag` | Yes       | NA                |
+| `out`  | Target `directory` to download the image        | No        | Basename of image |
+| `v`    | Print verbose log                               | No        | false             |
+| `os`   | Select container operating system               | No        | linux             |
+| `arch` | Select container architecture                   | No        | amd64             |
+| `h`    | Print help                                      | No        | false             |
 
 ### Examples ###
 
 ``` sh
-docker-download -i swagger-api/swagger-editor:v4-latest
+docker-download -i swaggerapi/swagger-editor
 ```
 
-Should download the image into a folder named `swagger-editor` in the directory from which the command was invoked
+Should download the image with tag `latest` into a folder named `swagger-editor` in the directory from which the command was invoked
 
 ```sh
-docker-download -i swagger-api/swagger-editor:v4-latest -o v4-latest
+docker-download -i swaggerapi/swagger-editor:v4-latest -out v4-latest
 ```
 
 Should download the image into a folder named `v4-latest` in the directory from which the command was invoked
+
+``` sh
+docker-download -i swaggerapi/swagger-editor:next-v5 -out next-v5 -os linux -arch amd64
+```
+
+Should download the tag `next-v5` for the image matching linux/amd64 into `next-v5` folder
