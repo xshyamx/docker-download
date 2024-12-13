@@ -1,0 +1,24 @@
+# -*- mode: restclient -*-
+:registryUri = https://registry-1.docker.io
+:authUri = https://auth.docker.io/token
+:image = swaggerapi/swagger-editor
+# v2 request
+GET https://registry-1.docker.io/v2/
+
+# token
+GET :authUri?service=registry.docker.io&scope=repository::image:pull
+-> jq-set-var :access_token .access_token
+
+:tag = next-v5
+# manifest
+GET :registryUri/v2/:image/manifests/next-v5
+Authorization: Bearer :access_token
+
+:tag = v4-latest
+# manifest
+GET :registryUri/v2/:image/manifests/:tag
+Authorization: Bearer :access_token
+
+# blob
+GET :registryUri/v2/:image/blobs/sha256:4bb03c4be64939387ad2f6730d16f59a9516214d92e6b04295f20bc8043fae7f
+Authorization: Bearer :access_token
