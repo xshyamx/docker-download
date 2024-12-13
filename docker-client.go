@@ -14,6 +14,7 @@ import (
 )
 
 type Layer struct {
+	id     string
 	Type   string `json:"mediaType"`
 	Size   int64  `json:"size"`
 	Digest string `json:"digest"`
@@ -225,22 +226,30 @@ func (c *DockerClient) WriteLayer(l Layer) error {
 		return fmt.Errorf("Failed to download blob %s: %w", layerShort, err)
 	}
 	defer res.Body.Close()
-	var reader io.ReadCloser
+	var (
+		reader   io.ReadCloser
+		filename string
+	)
 
 	if strings.HasSuffix(l.Type, "gzip") {
 		reader, err = gzip.NewReader(res.Body)
 		if err != nil {
 			return fmt.Errorf("Failed to create gunzip reader: %w", err)
 		}
+		if l.id == "" {
+			return fmt.Errorf("Layer id is empty")
+		}
+		filename = path.Join(c.config.basedir, l.id, l.Filename())
 	} else {
 		reader = res.Body
+		filename = path.Join(c.config.basedir, l.Filename())
+
 	}
-	filename := l.Filename()
 	defer reader.Close()
 	if c.config.verbose {
 		log.Printf("Writing to %s", filename)
 	}
-	f, err := os.Create(path.Join(c.config.basedir, filename))
+	f, err := os.Create(filename)
 	defer f.Close()
 	n, err := io.Copy(f, reader)
 	if err != nil {

@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	registry = "registry-1.docker.io"
+	registryUri = "https://registry-1.docker.io"
 )
 
 type Config struct {
@@ -38,8 +38,8 @@ func main() {
 	flag.StringVar(&imageRef, "i", "", "The `image` to download of the form image:tag")
 	flag.BoolVar(&config.verbose, "v", false, "Display `verbose` logs")
 	flag.StringVar(&config.basedir, "out", "", "Target `directory` to download")
-	flag.StringVar(&config.os, "os", "", "Operating system")
-	flag.StringVar(&config.arch, "arch", "", "Architecture")
+	flag.StringVar(&config.os, "os", "linux", "Operating system")
+	flag.StringVar(&config.arch, "arch", "amd64", "Architecture")
 	flag.BoolVar(&showHelp, "h", false, "Show command line `help`")
 	flag.Parse()
 	if showHelp {
@@ -73,7 +73,7 @@ func main() {
 	if config.verbose {
 		log.Printf("%+v", config)
 	}
-	dc := NewClient(registry, config)
+	dc := NewClient(registryUri, config)
 
 	// 1. access the registry get a 401
 	err = dc.PreAuth()
@@ -129,6 +129,7 @@ func main() {
 			log.Printf("Failed to write json: %s", err)
 		}
 		// Write layer.tar
+		layer.id = layerId
 		err = dc.WriteLayer(layer)
 		if err != nil {
 			log.Printf("Failed to download layer %s: %s", layer.Digest[7:], err)
