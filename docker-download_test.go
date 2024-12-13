@@ -5,7 +5,7 @@ import (
 )
 
 func TestGetLayers(t *testing.T) {
-	filename := "swagger-editor/4bb03c4be64939387ad2f6730d16f59a9516214d92e6b04295f20bc8043fae7f.json"
+	filename := "testdata/container-config.json"
 	layerIds, err := GetLayers(filename)
 	if err != nil {
 		t.Fatalf("Failed to open file %s: %s", filename, err)
