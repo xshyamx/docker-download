@@ -50,9 +50,10 @@ type DockerClient struct {
 }
 
 const (
-	HeaderAuthenticate      = "WWW-Authenticate"
-	ContentTypeManifestList = "application/vnd.docker.distribution.manifest.list.v2+json"
-	ContentTypeManifest     = "application/vnd.docker.distribution.manifest.v2+json"
+	HeaderAuthenticate        = "WWW-Authenticate"
+	ContentTypeManifestList   = "application/vnd.docker.distribution.manifest.list.v2+json"
+	ContentTypeManifest       = "application/vnd.docker.distribution.manifest.v2+json"
+	ContentTypeManifestv1List = "application/vnd.oci.image.index.v1+json"
 )
 
 func NewClient(baseUrl string, config Config) *DockerClient {
@@ -145,7 +146,8 @@ func (c *DockerClient) Manifest() (Manifest, error) {
 	if res.StatusCode == http.StatusOK {
 		// valid
 		contentType := res.Header.Get("content-type")
-		if contentType == ContentTypeManifestList {
+		if contentType == ContentTypeManifestList ||
+			contentType == ContentTypeManifestv1List {
 			// manifest list
 			var ml ManifestList
 			defer res.Body.Close()
@@ -202,6 +204,8 @@ func (c *DockerClient) Manifest() (Manifest, error) {
 		} else {
 			return m, fmt.Errorf("Not a valid content type: %s", contentType)
 		}
+	} else {
+		return m, fmt.Errorf("Request not successful: %s", res.Status)
 	}
 	return m, nil
 }

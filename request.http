@@ -26,3 +26,21 @@ Authorization: Bearer :access_token
 # Get manifest from list
 GET :registryUri/v2/:image/manifests/sha256:5a90044ce5a42518dda0e528c0c846d68ad3e25ef512dd64ea48daf7c9a52403
 Authorization: Bearer :access_token
+
+#postgres
+:image = library/postgres
+:tag = latest
+GET :authUri?service=registry.docker.io&scope=repository::image:pull
+-> jq-set-var :access_token .access_token
+
+# manifest
+GET :registryUri/v2/:image/manifests/:tag
+Authorization: Bearer :access_token
+Accept: application/vnd.docker.distribution.manifest.v2+json,application/vnd.oci.image.manifest.v1+json
+
+# catalog
+GET :registryUri/v2/_catalog
+Authorization: Bearer :access_token
+
+#
+GET :registryUri/v2/:image/tags/list

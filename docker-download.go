@@ -56,6 +56,9 @@ func main() {
 	} else {
 		config.tag = "latest"
 	}
+	if len(strings.Split(config.image, "/")) == 1 {
+		config.image = "library/" + config.image
+	}
 	if config.basedir == "" {
 		config.basedir = path.Base(config.image)
 	}
