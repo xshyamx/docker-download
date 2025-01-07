@@ -42,3 +42,10 @@ docker-download -i swaggerapi/swagger-editor:next-v5 -out next-v5 -os linux -arc
 ```
 
 Should download the tag `next-v5` for the image matching linux/amd64 into `next-v5` folder
+
+### Other Similar Projects ###
+
+- [DockerPull](https://github.com/FT-Fetters/DockerPull) / Java
+- [DockerImageSave](https://github.com/jadolg/DockerImageSave) / Golang
+- [Docker-downloader](https://github.com/hatamiarash7/Docker-downloader) / Bash & Python
+- [Skopeo](https://github.com/containers/skopeo) / Golang - much larger scope
